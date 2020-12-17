@@ -1,0 +1,75 @@
+<div class="container">
+  
+    <h1>Advertisement Form</h1>
+    <div class="alert alert-danger" *ngIf="errorMsg">
+      {{errorMsg}}
+    </div>
+    <form #userForm="ngForm" *ngIf='!submitted'  novalidate>
+    <!-- <form #userForm="ngForm" ng-submit="submitForm(myForm)"   class="personal-info-form"> -->
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" #title="ngModel" required class="form-control" [class.is-invalid]="title.invalid && title.touched" name="title" [(ngModel)]="adObj.title">
+        <small class="text-danger" [class.d-none]="title.valid || title.untouched">Title is required</small>
+      </div>
+  
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" #name="ngModel" required class="form-control" [class.is-invalid]="name.invalid && name.touched" name="name" [(ngModel)]="adObj.name">
+        <small class="text-danger" [class.d-none]="name.valid || name.untouched">Name is required</small>
+      </div>
+      
+      <div class="form-group">
+        <label>Category</label>
+        <select (blur)="validateCategory(category.value)" (change)="validateCategory(category.value)" #category="ngModel"
+        required class="custom-select" name="category"
+        [class.is-invalid]="categoryHasError && category.touched" 
+        [(ngModel)]="adObj.category"> 
+        <option value="default">I am interested in</option>
+        <option *ngFor="let category of categories">{{ category }}</option>
+        </select>
+        <small class="text-danger" [class.d-none]="!categoryHasError || category.untouched">Please choose a category</small>      
+      </div>
+  
+      <div class="form-group">
+        <label>Description</label>
+        <input type="text" #description="ngModel" required class="form-control" [class.is-invalid]="description.invalid && description.touched" name="description" [(ngModel)]="adObj.description">
+        <small class="text-danger" [class.d-none]="description.valid || description.untouched">Description is required!!!</small>
+      </div>
+  
+      <button (click)="addAd(userForm.value)" *ngIf="!isEdit" [disabled]="userForm.form.invalid || categoryHasError" class="btn btn-primary" type="submit">Submit Form</button>
+      <button (click)="updateAd()" class="btn btn-info" *ngIf="isEdit">Update</button>
+       </form>
+
+<br>
+<table class="table table-dark">
+    <thead>
+      <tr>
+        
+        <th scope="col">Title</th>
+        <th scope="col">Name</th>
+        <th scope="col">Category</th>
+        <th scope="col">Description</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor = "let ad of allAd">
+        <td>{{ad.title}}</td>
+        <td>{{ad.name}}</td>
+        <td>{{ad.category}}</td>
+        <td>{{ad.description}}</td>
+        <td><button (click)="editAd(ad)" class="btn btn-warning">Edit</button></td>
+        <td><button (click)= "deleteAd(ad)" class="btn btn-danger">Delete</button></td>
+
+      </tr>
+    </tbody>
+  </table>
+   
+   </div>
+    
+    
+    
+    
+
+<router-outlet></router-outlet>

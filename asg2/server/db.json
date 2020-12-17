@@ -1,0 +1,11 @@
+{
+  "ads": [
+    {
+      "title": "Sofa",
+      "name": "PepperFry",
+      "category": "Furniture",
+      "description": "A good sofa",
+      "id": 1
+    }
+  ]
+}
